@@ -44,13 +44,15 @@ namespace Machina
             if (file == null)
                 return;
 
-            await DisplayAlert("Reussi", file.Path, "OK");
+            //await DisplayAlert("Reussi", file.Path, "OK");
 
             /*image.Source = ImageSource.FromStream(() =>
             {
                 var stream = file.GetStream();
                 return stream;
             });*/
+
+            Navigation.PushAsync(new ScannerPage());
         }
     }
 }

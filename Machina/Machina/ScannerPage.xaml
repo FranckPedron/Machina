@@ -3,13 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             BackgroundImageSource="background.png"
              mc:Ignorable="d"
              x:Class="Machina.ScannerPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        
+        <StackLayout VerticalOptions="Center">
+
+            <Image x:Name="faceImage"
+                   Aspect="AspectFill"
+                   WidthRequest="200"
+                   HeightRequest="350"
+                   BackgroundColor="Gray"  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
