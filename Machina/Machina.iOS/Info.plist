@@ -32,5 +32,8 @@
 	<string>Machina</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Cette application doit accéder à l'appareil pour prendre des photos.</string>
+
 </dict>
 </plist>
