@@ -1,4 +1,5 @@
-﻿using Plugin.Media.Abstractions;
+﻿using Machina.service;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Machina
                 var stream = file.GetStreamWithImageRotatedForExternalStorage() ;
                 return stream;
             });
+
+            CognitiveService();
         }
 
         private void ContinueButtonClicked(object sender, EventArgs e)
