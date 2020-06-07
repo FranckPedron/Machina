@@ -52,7 +52,7 @@ namespace Machina
                 return stream;
             });*/
 
-            Navigation.PushAsync(new ScannerPage());
+            await Navigation.PushAsync(new ScannerPage(file));
         }
     }
 }

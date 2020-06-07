@@ -15,6 +15,11 @@
                    WidthRequest="200"
                    HeightRequest="350"
                    BackgroundColor="Gray"  />
+
+            <Button Text="Cliquez ici pour continuer"
+                    HorizontalOptions="Center"
+                    Clicked="ContinueButtonClicked"
+                    TextColor="White" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
