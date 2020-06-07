@@ -14,8 +14,7 @@
                    Aspect="AspectFill"
                    WidthRequest="200"
                    HeightRequest="350"
-                   BackgroundColor="Gray"
-                   />
+                   BackgroundColor="Gray"  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
