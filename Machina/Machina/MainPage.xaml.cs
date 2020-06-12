@@ -38,7 +38,8 @@ namespace Machina
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
                 Directory = "Sample",
-                Name = "test.jpg"
+                Name = "test.jpg",
+                PhotoSize=Plugin.Media.Abstractions.PhotoSize.Medium
             });
 
             if (file == null)

@@ -26,7 +26,7 @@ namespace Machina
                 return stream;
             });
 
-            CognitiveService();
+            CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
         }
 
         private void ContinueButtonClicked(object sender, EventArgs e)
