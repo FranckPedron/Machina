@@ -31,8 +31,14 @@ namespace Machina.service
 
                     var data = ReadStream(imageStream);
                     var result = webClient.UploadData(url, data);
-
-                    Console.WriteLine("Réponse OK");
+                   
+                    if(result == null){
+                        return;
+                    }
+                  
+                    string json = Encoding.UTF8.GetString(result, 0, result.Length);
+                    Console.WriteLine("Réponse OK" + json) ;
+                    Newtonsoft.Json.JsonConvert.DeserializeObject(json);
                 }
 
                 catch (Exception ex)
