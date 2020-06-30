@@ -26,9 +26,25 @@ namespace Machina
                 return stream;
             });
 
-            CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
+            startDetection(file);
+
         }
 
+       
+        private async Task startDetection(MediaFile file)
+        {
+            var faceDetectResult = await CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
+
+            if (faceDetectResult == null)
+            {
+                faceLabel.Text = "Pas de détection";
+            }
+            else
+            {
+                faceLabel.Text = "Age : " + faceDetectResult.faceAttributes.age;
+            }
+        }
+        
         private void ContinueButtonClicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();

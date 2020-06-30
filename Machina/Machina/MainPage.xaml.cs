@@ -17,6 +17,7 @@ namespace Machina
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private void StartButtonClicked(object sender, EventArgs e)

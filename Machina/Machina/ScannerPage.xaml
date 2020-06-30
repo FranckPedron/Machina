@@ -20,6 +20,13 @@
                     HorizontalOptions="Center"
                     Clicked="ContinueButtonClicked"
                     TextColor="White" />
+            
+            <Label x:Name="faceLabel"
+                   Text="XXX"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
