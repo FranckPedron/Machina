@@ -34,14 +34,20 @@ namespace Machina
         private async Task startDetection(MediaFile file)
         {
             var faceDetectResult = await CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
+            
+            statusLabel.Text = "Analyse terminée";
 
             if (faceDetectResult == null)
             {
-                faceLabel.Text = "Pas de détection";
+                await DisplayAlert("Erreur","L'analyse n'a pas fonctionné","OK");
+                await Navigation.PopAsync();
             }
             else
             {
-                faceLabel.Text = "Age : " + faceDetectResult.faceAttributes.age;
+                ageLabel.Text = faceDetectResult.faceAttributes.age.ToString();
+                genderLabel.Text = faceDetectResult.faceAttributes.gender.Substring(0, 1).ToUpper();
+                infoLayout.IsVisible = true;
+                continueButton.Opacity = 1;
             }
         }
         

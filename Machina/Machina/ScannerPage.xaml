@@ -8,24 +8,67 @@
              x:Class="Machina.ScannerPage">
     <ContentPage.Content>
         
-        <StackLayout VerticalOptions="Center">
+        <StackLayout VerticalOptions="Center" Margin="20,0">
+           
+            <Grid HeightRequest="400">
 
-            <Image x:Name="faceImage"
+                <Image 
+                   Source="cadre.png"
+                   Aspect="Fill" />
+            
+                <Image x:Name="faceImage"
                    Aspect="AspectFill"
-                   WidthRequest="200"
-                   HeightRequest="350"
+                   Margin="20"    
                    BackgroundColor="Gray"  />
 
-            <Button Text="Cliquez ici pour continuer"
-                    HorizontalOptions="Center"
-                    Clicked="ContinueButtonClicked"
-                    TextColor="White" />
-            
-            <Label x:Name="faceLabel"
-                   Text="XXX"
+                <StackLayout x:Name="infoLayout"
+                             IsVisible="false"
+                             Orientation="Horizontal"
+                             HeightRequest="88"
+                             Margin="20,0,20,20"
+                             Padding="10,0"
+                             VerticalOptions="End"
+                             BackgroundColor="#90000000">
+
+                    <Label x:Name="genderLabel"
+                           Text="X"
+                           FontSize="60"
+                           VerticalOptions="End"
+                           TextColor="White"
+                           HorizontalOptions="FillAndExpand"
+                           />
+
+                    <Label Text="AGE"
+                           FontSize="30"
+                           VerticalOptions="End"
+                           Margin="0,0,0,17"
+                           TextColor="White"
+                           />
+
+                    <Label x:Name="ageLabel"
+                           Text="XX"
+                           VerticalOptions="End"
+                           FontSize="60"
+                           TextColor="White"
+                           />
+
+                </StackLayout>
+            </Grid>
+
+            <Label x:Name="statusLabel"
+                   Text="Analyse en cours..."
                    TextColor="White"
                    HorizontalOptions="Center"
                    Margin="0,20,0,0"/>
+
+            <Button x:Name="continueButton"
+                    Text="Cliquez ici pour continuer"
+                    Opacity="0"
+                    HorizontalOptions="Center"
+                    Clicked="ContinueButtonClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="White" />
+            
 
         </StackLayout>
     </ContentPage.Content>
