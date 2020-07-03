@@ -1,9 +1,12 @@
 ﻿using Machina.model;
 using Machina.service;
 using Plugin.Media.Abstractions;
+using Plugin.SimpleAudioPlayer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,31 +32,34 @@ namespace Machina
                 var stream = file.GetStreamWithImageRotatedForExternalStorage() ;
                 return stream;
             });
-            startLaserAnimation();
-            startDetection(file);
+            StartLaserAnimation();
+            StartDetection(file);
 
         }
 
-        private async Task startLaserAnimation()
+        private async Task StartLaserAnimation()
             {
             laserImage.Opacity = 0;
             await Task.Delay(500);
             await laserImage.FadeTo(1, 500);
-               
+            PlaySound("scan.wav");
+
             await laserImage.TranslateTo(0, 360, 1800);
             double y = 0;
 
             while (processing)
             {
+                PlayCurrentSound();
                 await laserImage.TranslateTo(0, y, 1800);
                 y = (Y == 0) ? 360 : 0;
             }
 
             laserImage.IsVisible = false;
+            PlaySound("result.wav");
             await DisplayResults();
             }
 
-        private async Task startDetection(MediaFile file)
+        private async Task StartDetection(MediaFile file)
         {
             faceDetectResult = await CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
             processing = false;
@@ -82,6 +88,31 @@ namespace Machina
         private void ContinueButtonClicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
+        }
+
+        private void PlaySound(string soundName)
+        {
+            ISimpleAudioPlayer player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Load(GetStreamFromFile(soundName));
+            player.Play();
+        }
+
+        private void PlayCurrentSound()
+        {
+            ISimpleAudioPlayer player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Stop();
+            player.Play();
+        }
+
+        private Stream GetStreamFromFile(string filename)
+        {
+            var assembly = typeof(App).GetTypeInfo().Assembly;
+
+            var names = assembly.GetManifestResourceNames();
+            Console.WriteLine("RESOURCES NAMES : " + String.Join(", ", names));
+
+            var stream = assembly.GetManifestResourceStream("Machina." + filename);
+            return stream;
         }
     }
 }
