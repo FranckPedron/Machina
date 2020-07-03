@@ -14,32 +14,38 @@
 
                 <Image 
                    Source="cadre.png"
-                   Aspect="Fill" />
+                   Aspect="Fill"/>
             
                 <Image x:Name="faceImage"
                    Aspect="AspectFill"
                    Margin="20"    
-                   BackgroundColor="Gray"  />
+                   BackgroundColor="Gray"/>
 
+                <Image x:Name="laserImage"
+                       Source="laser.png"
+                       VerticalOptions="Start"
+                       Margin="0,-10,0,0"
+                       />
+                
                 <StackLayout x:Name="infoLayout"
                              IsVisible="false"
                              Orientation="Horizontal"
                              HeightRequest="88"
-                             Margin="20,0,20,20"
+                             Margin="10,0,20,10"
                              Padding="10,0"
                              VerticalOptions="End"
                              BackgroundColor="#90000000">
 
                     <Label x:Name="genderLabel"
                            Text="X"
-                           FontSize="60"
+                           FontSize="50"
                            VerticalOptions="End"
                            TextColor="White"
                            HorizontalOptions="FillAndExpand"
                            />
 
                     <Label Text="AGE"
-                           FontSize="30"
+                           FontSize="25"
                            VerticalOptions="End"
                            Margin="0,0,0,17"
                            TextColor="White"
@@ -48,7 +54,7 @@
                     <Label x:Name="ageLabel"
                            Text="XX"
                            VerticalOptions="End"
-                           FontSize="60"
+                           FontSize="50"
                            TextColor="White"
                            />
 
