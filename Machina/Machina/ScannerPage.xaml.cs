@@ -129,7 +129,7 @@ namespace Machina
             speechOptions = new SpeechOptions()
             {
                 Volume = .75f,
-                Pitch = 0.1f,
+                Pitch = 0.2f,
                 Locale = locale
             };
         }

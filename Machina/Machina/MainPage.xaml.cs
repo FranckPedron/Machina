@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Machina
@@ -14,8 +15,16 @@ namespace Machina
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        public ICommand AnimationClickedCommand { get; set; }
+
         public MainPage()
         {
+            AnimationClickedCommand = new Command(() =>
+            {
+                StartButtonClickedAsync();
+            });
+            BindingContext = this;
+
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
