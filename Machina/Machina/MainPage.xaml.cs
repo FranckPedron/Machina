@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Machina
@@ -37,6 +38,17 @@ namespace Machina
         
         private async Task StartButtonClickedAsync()
         {
+
+            // Test connection internet
+            var networkAccess = Connectivity.NetworkAccess;
+           
+            if (networkAccess != NetworkAccess.Internet)
+            {
+               await DisplayAlert("Erreur", ":Il n'y a pas de connection réseau !.", "OK");
+               return;
+            }
+
+
             await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
@@ -53,15 +65,8 @@ namespace Machina
             });
 
             if (file == null)
-                return;
+                await Navigation.PopAsync();
 
-            //await DisplayAlert("Reussi", file.Path, "OK");
-
-            /*image.Source = ImageSource.FromStream(() =>
-            {
-                var stream = file.GetStream();
-                return stream;
-            });*/
 
             await Navigation.PushAsync(new ScannerPage(file),false);
         }

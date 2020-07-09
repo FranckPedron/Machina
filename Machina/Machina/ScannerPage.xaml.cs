@@ -1,19 +1,18 @@
-﻿using Machina.model;
-using Machina.service;
-using Plugin.Media.Abstractions;
-using Plugin.SimpleAudioPlayer;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Machina.model;
+using Machina.service;
+using Plugin.Media.Abstractions;
+using Plugin.SimpleAudioPlayer;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Machina
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScannerPage : ContentPage
     {
         bool processing = true;
@@ -58,8 +57,23 @@ namespace Machina
 
             laserImage.IsVisible = false;
             PlaySound("result.wav");
-            await DisplayResults();
-            await ResultsSpeech();
+            if (faceDetectResult == null)
+            {
+                // Cas d'erreur
+                await OnAnalysisError();
+            }
+            else
+            {
+                await DisplayResults();
+                await ResultsSpeech();
+            }
+        }
+
+        private async Task OnAnalysisError()
+        {
+            Speak("Humain non détecté");
+            await DisplayAlert("Erreur", "L'analyse n'a pas fonctionné", "OK");
+            await Navigation.PopAsync();
         }
 
         private async Task StartDetection(MediaFile file)
@@ -71,22 +85,15 @@ namespace Machina
 
         private async Task DisplayResults()
         {
+            if (faceDetectResult == null) return;
+
             statusLabel.Text = "Analyse terminée";
 
-            if (faceDetectResult == null)
-            {
-                //faceLabel.Text = "Pas de détection";
-                await DisplayAlert("Erreur", "L'analyse n'a pas fonctionné", "OK");
-                await Navigation.PopAsync();
-            }
-            else
-            {
-                // On a récupéré les infos du visage
-                ageLabel.Text = faceDetectResult.faceAttributes.age.ToString();
-                genderLabel.Text = faceDetectResult.faceAttributes.gender.Substring(0, 1).ToUpper();
-                infoLayout.IsVisible = true;
-                continueButton.Opacity = 1;
-            }
+            // On a récupéré les infos du visage
+            ageLabel.Text = faceDetectResult.faceAttributes.age.ToString();
+            genderLabel.Text = faceDetectResult.faceAttributes.gender.Substring(0, 1).ToUpper();
+            infoLayout.IsVisible = true;
+            continueButton.Opacity = 1;
         }
 
         private void ContinueButtonClicked(object sender, EventArgs eventArgs)
@@ -129,7 +136,7 @@ namespace Machina
             speechOptions = new SpeechOptions()
             {
                 Volume = .75f,
-                Pitch = 0.2f,
+                Pitch = 0.1f,
                 Locale = locale
             };
         }
@@ -145,23 +152,18 @@ namespace Machina
 
         private async Task ResultsSpeech()
         {
-            if (faceDetectResult == null)
+            if (faceDetectResult == null) return;
+
+            await Speak("Humain détecté");
+            if (faceDetectResult.faceAttributes.gender.ToLower() == "male")
             {
-                await Speak("Humain non détecté");
+                await Speak("Sexe masculin");
             }
             else
             {
-                await Speak("Humain détecté");
-                if (faceDetectResult.faceAttributes.gender.ToLower() == "male")
-                {
-                    await Speak("Sexe masculin");
-                }
-                else
-                {
-                    await Speak("Sexe féminin");
-                }
-                await Speak("âge " + faceDetectResult.faceAttributes.age.ToString() + " ans");
+                await Speak("Sexe féminin");
             }
+            await Speak("âge " + faceDetectResult.faceAttributes.age.ToString() + " ans");
         }
     }
 }
