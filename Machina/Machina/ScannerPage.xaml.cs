@@ -34,7 +34,7 @@ namespace Machina
             });
 
             LaserAnimationWithSoundAndDisplayResults();
-            StartDetection(file);
+            startDetection(file);
         }
 
         //laserImage
@@ -76,7 +76,7 @@ namespace Machina
             await Navigation.PopAsync();
         }
 
-        private async Task StartDetection(MediaFile file)
+        private async Task startDetection(MediaFile file)
         {
             faceDetectResult = await CognitiveService.FaceDetect(file.GetStreamWithImageRotatedForExternalStorage());
             //await Task.Delay(5000);

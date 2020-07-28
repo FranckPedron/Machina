@@ -34,26 +34,23 @@ namespace Machina
         {
             StartButtonClickedAsync();
         }
-       
-        
+
         private async Task StartButtonClickedAsync()
         {
-
-            // Test connection internet
+            // Tester si on a accès à internet
             var networkAccess = Connectivity.NetworkAccess;
-           
+
             if (networkAccess != NetworkAccess.Internet)
             {
-               await DisplayAlert("Erreur", ":Il n'y a pas de connection réseau !.", "OK");
-               return;
+                await DisplayAlert("Erreur", "Vous devez être connecté au réseau", "OK");
+                return;
             }
-
 
             await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-               await DisplayAlert("Erreur", ":La caméra n'est pas disponible.", "OK");
+                await DisplayAlert("Erreur", "La caméra n'est pas disponible", "OK");
                 return;
             }
 
@@ -61,14 +58,27 @@ namespace Machina
             {
                 Directory = "Sample",
                 Name = "test.jpg",
-                PhotoSize=Plugin.Media.Abstractions.PhotoSize.Medium
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
             });
 
             if (file == null)
-                await Navigation.PopAsync();
+            {
+                // Quand l'utilisateur annule la photo
+                //await DisplayAlert("Erreur", "Pas de fichier", "OK");
+                return;
+            }
 
 
-            await Navigation.PushAsync(new ScannerPage(file),false);
+            //await DisplayAlert("Réussi", file.Path, "OK");
+
+            /*image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });*/
+
+
+            await Navigation.PushAsync(new ScannerPage(file), false);
         }
     }
 }
